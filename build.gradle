@@ -1,0 +1,40 @@
+
+plugins {
+    id 'java'
+}
+ext {
+    junitJupiterVersion = '5.11.0'
+    allureJunit5Version = '2.13.6'
+}
+
+subprojects {
+    apply plugin: 'java'
+    dependencies {
+        testImplementation "org.junit.jupiter:junit-jupiter:${junitJupiterVersion}"
+        testImplementation 'io.rest-assured:rest-assured:5.5.0'
+        testImplementation "io.qameta.allure:allure-junit5:${allureJunit5Version}"
+    }
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+task runApiTest(type: Test) {
+    useJUnitPlatform()
+    include '**/*ApiTest.*'
+}
+task runUiTest(type: Test) {
+    useJUnitPlatform()
+    include "**/*UiTest.*"
+}
+task runSmokeTest(type: Test) {
+    useJUnitPlatform() {
+        include "**/*SmokeTest.*"
+    }
+    test {
+        useJUnitPlatform()
+    }
+}
+
+
