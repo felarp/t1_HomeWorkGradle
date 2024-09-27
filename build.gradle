@@ -13,6 +13,8 @@ subprojects {
         testImplementation "org.junit.jupiter:junit-jupiter:${junitJupiterVersion}"
         testImplementation 'io.rest-assured:rest-assured:5.5.0'
         testImplementation "io.qameta.allure:allure-junit5:${allureJunit5Version}"
+        implementation 'com.codeborne:selenide:7.5.1'
+
     }
 
     repositories {
@@ -20,15 +22,15 @@ subprojects {
     }
 }
 
-task runApiTest(type: Test) {
+tasks.register('runApiTest', Test) {
     useJUnitPlatform()
     include '**/*ApiTest.*'
 }
-task runUiTest(type: Test) {
+tasks.register('runUiTest', Test) {
     useJUnitPlatform()
     include "**/*UiTest.*"
 }
-task runSmokeTest(type: Test) {
+tasks.register('runSmokeTest', Test) {
     useJUnitPlatform() {
         include "**/*SmokeTest.*"
     }
